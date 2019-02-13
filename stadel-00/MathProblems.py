@@ -16,6 +16,7 @@ class Problem3():
         print(numpy.linalg.matrix_rank(numpy.matmul(self.A.T, self.B)))
     def outputc(self):
         bt = self.B.T
+        print(self.C.I)
         print(numpy.matmul(self.A, bt) + self.C.I)
 p3 = Problem3()
 # p3.outputa()
