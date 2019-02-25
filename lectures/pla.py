@@ -4,8 +4,8 @@ import numpy as np
 import random
 import PlotP
 from sklearn.datasets.samples_generator import make_blobs
-N = 100
-X,y = make_blobs(n_samples=N, centers=2, n_features=2 )
+N = 1000
+X,y = make_blobs(n_samples=N, centers=2, n_features=10 )
 y[y==0] = -1
 X = np.append(np.ones((N,1)),X, 1)
 
@@ -15,7 +15,7 @@ X = np.append(np.ones((N,1)),X, 1)
 
 def main(X, y):    
     # initialize the weigths to zeros
-    w = np.zeros(3)
+    w = np.zeros(11)
     it = 0
     
     # Iterate until all points are correctly classified
@@ -32,8 +32,8 @@ def main(X, y):
         #              % (str(N),str(it)))
         #    plt.savefig('p_N%s_it%s' % (str(N),str(it)), \
         #                dpi=200, bbox_inches='tight')
-        PlotP.pltPer(X,y,w, it)
-        PlotP.plt.show()
+    PlotP.pltPer(X,y,w, it)
+    PlotP.plt.show()
     print("Total Iterations: " + str(it))
 
 def classification_error(w, X, y):
