@@ -14,7 +14,7 @@ y[y==4] = +1    #number zero is the positive class
 c0 = plt.scatter(X[y==-1,1], X[y==-1,2], s=20, color='r', marker='x')
 c1 = plt.scatter(X[y==1,1], X[y==1,2], s=20, color='b', marker='o')
 # displays legend
-plt.legend((c0, c1), ('All Other Numbers -1', 'Number Zero +1'), 
+plt.legend((c0, c1), ('All Other Numbers -1', 'Number Four +1'), 
         loc='upper right', scatterpoints=1, fontsize=11)
 # displays axis legends and title
 plt.xlabel(r'$x_1$')
