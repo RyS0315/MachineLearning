@@ -2,7 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.manifold import TSNE
 from sklearn.decomposition import PCA
-import makeSemiCircles
 # import pla
 
 def pltPer(X, Y, W, it):

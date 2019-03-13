@@ -26,7 +26,7 @@ player_list = pygame.sprite.Group()# Create group for player
 class Game():
     def __init__(self, player, pipes):
         self.exit = False# Program is running
-        self.play = True# Game is running
+        self.play = False# Game is running
         self.replay = False
         self.timer = 0# Init the timer -> Used for time events such as new pipes
         self.player = player
@@ -34,27 +34,31 @@ class Game():
         self.score = 0
 
 class Controller():
-    def __init__(self, player):
+    def __init__(self, player, game):
         self.player = player
         self.timer = 0
+        self.processor = dp.DataProcessor(game)
     def getcontrol(self, timer):
         if(self.player == 'player'):
             for event in pygame.event.get():
                 if(event.type == pygame.KEYDOWN):
                     if game.play:
-                        DataRecorder.formatData(game, 1)
+                        DataRecorder.addNewData(game, 1)
                         DataRecorder.sectioninps += 1
+                    else:
+                        DataRecorder.sectioninps = 0
                     return 'jump'
+                elif(self.timer % 5 == 0):
+                    if game.play:
+                        DataRecorder.addNewData(game, 0)
+                        DataRecorder.sectioninps += 1
                 if event.type == pygame.QUIT:
-                    DataRecorder.formatData(game, 0)
-                    DataRecorder.sectioninps += 1
                     return 'quit'
         if(self.player == 'ai'):
-            processor = dp.DataProcessor(game)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     return 'quit'
-            result = processor.processEvent()
+            result = self.processor.processEvent()
             return result
 
 #Create the Background
@@ -82,8 +86,8 @@ bg = Background("images/background.png" , (0,0))
 addPipes()
 player = Player.Player((200,screen_height/2), screen)
 player_list.add(player)
-controller = Controller('ai')
 game = Game(player, pipes_list)
+controller = Controller('ai', game)
 
 def gameOver():
     print("gameover")
@@ -125,6 +129,7 @@ def checkPass(player, pipes):
             pipe.completed = True
             game.score += 1
             DataRecorder.addResults(1, DataRecorder.sectioninps)
+            DataRecorder.sectioninps = 0
             print(game.score)
 
 def checkRemove(pipes):

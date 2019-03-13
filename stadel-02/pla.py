@@ -58,8 +58,3 @@ def choose_miscl_point(w, X, y):
     return mispts[random.randrange(0,len(mispts))]
 
 main(X,y)
-
-
-
-
-
