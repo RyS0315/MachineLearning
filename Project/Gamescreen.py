@@ -44,14 +44,17 @@ class Controller():
                 if(event.type == pygame.KEYDOWN):
                     if game.play:
                         DataRecorder.addNewData(game, 1)
-                        DataRecorder.sectioninps += 1
+                        if(checkCollision()):
+                            DataRecorder.addResults(1)
                     else:
                         DataRecorder.sectioninps = 0
+                        
                     return 'jump'
                 elif(self.timer % 5 == 0):
                     if game.play:
                         DataRecorder.addNewData(game, 0)
-                        DataRecorder.sectioninps += 1
+                        if(checkCollision()):
+                            DataRecorder.addResults(1)
                 if event.type == pygame.QUIT:
                     return 'quit'
         if(self.player == 'ai'):
@@ -59,6 +62,8 @@ class Controller():
                 if event.type == pygame.QUIT:
                     return 'quit'
             result = self.processor.processEvent()
+            if(checkCollision()):
+                DataRecorder.addResults(1)
             return result
 
 #Create the Background
@@ -91,7 +96,8 @@ controller = Controller('ai', game)
 
 def gameOver():
     print("gameover")
-    DataRecorder.addResults(0, DataRecorder.sectioninps)
+    DataRecorder.addNewData(game, 0)
+    DataRecorder.addResults(0)
     return False
 
 def checkCollision():
@@ -128,8 +134,6 @@ def checkPass(player, pipes):
                 continue
             pipe.completed = True
             game.score += 1
-            DataRecorder.addResults(1, DataRecorder.sectioninps)
-            DataRecorder.sectioninps = 0
             print(game.score)
 
 def checkRemove(pipes):

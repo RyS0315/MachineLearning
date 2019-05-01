@@ -1,5 +1,5 @@
 import pandas as pd
-sectioninps = 0
+
 
 def clearFile():
     file = open("Data/DataInputs.csv", 'w')
@@ -20,18 +20,15 @@ def addData(data):
         df.to_csv(f, header=False)
     return True
 
-def addResults(result, numinps):
+def addResults(result):
     #adds the outcome for the
-    numinps += 1
     file = "Data/DataResults.csv"
     resarr = []
-    for i in range(0, numinps-1):
-        resarr.append(result)
+    resarr.append(result)
     df = pd.DataFrame({'Result':resarr})
     with open(file, 'a') as f:
         df.to_csv(f, header=False)
-    res = pd.read_csv("Data/DataResults.csv")
-    readInputs()
+    res = pd.read_csv(file)
     # print(res)
     return True
 
