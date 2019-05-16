@@ -32,7 +32,7 @@ class Player(pygame.sprite.Sprite):
     # Method to do the jump animation
     def jump(self, jump):
         if(jump == 'jump'):
-            self.mom = -13
+            self.mom = -11
             self.image = pygame.image.load("images/player.png")
             self.image = pygame.transform.scale(self.image, (75,75))
             self.image = self.rot_center(self.image, 55)

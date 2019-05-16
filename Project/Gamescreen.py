@@ -44,27 +44,21 @@ class Controller():
                 if(event.type == pygame.KEYDOWN):
                     if game.play:
                         DataRecorder.addNewData(game, 1)
-                        if(checkCollision()):
-                            DataRecorder.addResults(1)
+                        DataRecorder.addResults(1)
                     else:
                         DataRecorder.sectioninps = 0
-                        
                     return 'jump'
-                elif(self.timer % 5 == 0):
-                    if game.play:
-                        DataRecorder.addNewData(game, 0)
-                        if(checkCollision()):
-                            DataRecorder.addResults(1)
                 if event.type == pygame.QUIT:
                     return 'quit'
+            if(self.timer % 3 == 0):
+                if game.play:
+                    DataRecorder.addNewData(game, 0)
+                    DataRecorder.addResults(1)
         if(self.player == 'ai'):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     return 'quit'
-            result = self.processor.processEvent()
-            if(checkCollision()):
-                DataRecorder.addResults(1)
-            return result
+            return self.processor.processEvent()            
 
 #Create the Background
 class Background(pygame.sprite.Sprite):
@@ -83,8 +77,6 @@ def addPipes():
     newpipes = Pipes.Pipes((1024, pipetop), screen)
     pipes_list.add(newpipes)
     pipes_list.add(newpipes.bottompipe)
-    # bottompipe = BottomPipe(newpipes)
-    # pipes_list.add(bottompipe)
 
 #---- Initialize entities ----#
 bg = Background("images/background.png" , (0,0))
@@ -92,11 +84,10 @@ addPipes()
 player = Player.Player((200,screen_height/2), screen)
 player_list.add(player)
 game = Game(player, pipes_list)
-controller = Controller('ai', game)
+controller = Controller('player', game)
 
 def gameOver():
     print("gameover")
-    DataRecorder.addNewData(game, 0)
     DataRecorder.addResults(0)
     return False
 
